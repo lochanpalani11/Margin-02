@@ -1,64 +1,51 @@
 # Margin
 
-A native Android app for reselling/flipping inventory — track what you buy, what you sell it for, and your profit margin, entirely offline and on-device.
+**Margin** is an Android app built for resellers and flippers to track inventory, calculate profits, and estimate the true cost of auction purchases. Whether you're buying from bidding websites and selling locally, Margin helps you keep track of every dollar.
 
-Built exactly to the platform spec you provided: **Kotlin + Jetpack Compose only** — no React Native, Flutter, KMP UI, XML layouts, or WebViews anywhere in the codebase.
+## Features
 
-## What it does
+- 📦 Track purchased, listed, and sold inventory
+- 💰 Calculate profit, ROI, and profit margins
+- 📊 View business analytics and profit trends
+- 🏷️ Organize inventory by category
+- 🧮 Final Bid Calculator with buyer's premium, taxes, and additional fees
+- 📝 Add notes and photos to inventory items
+- 📤 Export and import your inventory data
+- 🔒 Fully offline — your data stays on your device
 
-- **Dashboard** — total profit, ROI, capital currently invested, revenue, in-stock/listed counts, average days to sell, and a 6-month profit trend chart.
-- **Inventory** — searchable, filterable (All / In Stock / Listed / Sold) list of every item you've bought.
-- **Add / Edit Item** — name, category (with quick-pick suggestions from your existing categories), purchase price, purchase date, where you bought it, notes, and an optional photo.
-- **Mark as Sold** — sale price, fees, sale date, platform sold on, with a live projected-profit preview before you confirm.
-- **Item Detail** — full breakdown of profit, margin %, ROI %, and days held for sold items; edit/delete/mark-as-listed actions for active items.
-- **Analytics** — profit trend over 3/6/12 months and profit-by-category breakdown.
-- **Settings** — export your entire inventory to a JSON file, import it back (with a confirmation before it overwrites anything), or clear all data. No account, no sign-in, no server — everything lives in the app's local Room database, exactly as you asked.
+## Screenshots
 
-## Architecture
+<img width="387" height="807" alt="Screenshot 2026-07-22 163749" src="https://github.com/user-attachments/assets/0b8e2c42-01e2-486e-ac40-15d36194e998" />
+<img width="401" height="807" alt="Screenshot 2026-07-22 163816" src="https://github.com/user-attachments/assets/b85a76b5-3e6d-45fd-bb4d-0b47215cf3aa" />
+<img width="396" height="785" alt="Screenshot 2026-07-22 163832" src="https://github.com/user-attachments/assets/24f02ae2-e4ca-4390-b5da-cc884ad7c9be" />
+<img width="393" height="798" alt="Screenshot 2026-07-22 163845" src="https://github.com/user-attachments/assets/68e2022b-0c94-4e7e-8f5c-571fdd2f993f" />
+<img width="392" height="802" alt="Screenshot 2026-07-22 163906" src="https://github.com/user-attachments/assets/22f20861-4e58-42b9-8f2f-6d0cd9faa8f1" />
 
-Clean, layered MVVM, per the spec:
 
-```
-data/
-  local/          Room entities, DAO, TypeConverters, database
-  repository/     ItemRepositoryImpl — maps entities <-> domain models, aggregate queries
-  backup/         Local JSON export/import (Storage Access Framework, no network)
-domain/
-  model/          Pure Kotlin domain models (InventoryItem, DashboardStats, ...)
-  repository/     ItemRepository interface (what the UI layer depends on)
-di/               Hilt modules (DatabaseModule, RepositoryModule)
-ui/
-  theme/          Color, type, shape, spacing tokens — the whole design system
-  components/     Reusable pieces: KpiCard, InventoryTile, StatusChip, ProfitIndicator,
-                   ProfitBarChart, CategoryBreakdownList, form fields, buttons
-  screens/        One package per screen, each with its own ViewModel
-  navigation/     Navigation Compose graph + bottom nav
-```
+## Installation
 
-- **MVVM + Repository pattern**, Hilt for DI, StateFlow for all UI state, Coroutines/Flow throughout.
-- **Room, offline-first**: every read is a `Flow` straight from SQLite via Room, so the UI updates the instant you change data — there's no separate "sync" step because there's nothing to sync to. Dashboard/analytics aggregates (totals, ROI, monthly profit, category breakdown) are computed with SQL `SUM`/`CASE WHEN` queries rather than in Kotlin, so it stays fast even with a large inventory.
-- **No Retrofit/networking layer**: since Margin has no backend and needs none, I left networking code out entirely rather than including an unused library and dead code paths.
-- **Charts are hand-built on Compose's `Canvas`**, not a third-party charting library. This was a deliberate call: I can't compile or run this project in the environment I built it in (see "About this build" below), and a bar chart on Canvas is something I can be fully confident is syntactically and behaviorally correct, whereas a third-party charting library's exact API surface is a real risk of subtle build errors I'd have no way to catch. It also means one less dependency to ever go stale.
-- **Images** are copied into the app's private storage on pick (via Coil for display) so they persist reliably without relying on a content URI grant surviving app restarts.
+1. Open the **Releases** page of this repository.
+2. Download the latest **Margin.apk** file.
+3. Transfer the APK to your Android device if necessary.
+4. Install the APK (you may need to allow installations from unknown sources).
+5. Launch **Margin** and start tracking your inventory.
 
-## Design
+## Requirements
 
-Dark-first, matching the Linear/Vercel/Raycast/Arc reference points you gave: near-black layered surfaces, one accent green pulled straight from your app icon, generous spacing, 18–20dp rounded corners, restrained type scale with tight letter-spacing on headlines. No light theme — Margin always renders dark, by design.
+- Android 8.0 (API 26) or newer
 
-## App icon
+## Built With
 
-Your uploaded icon is wired in at every density (mdpi through xxxhdpi) as the launcher icon.
+- Kotlin
+- Jetpack Compose
+- Room Database
+- Hilt
+- Material 3
 
-## Building it
+## License
 
-1. Open the `Margin/` folder in **Android Studio** (Ladybug or newer). It will detect there's no Gradle wrapper jar and offer to generate one — accept that, or run `gradle wrapper` yourself first if you have Gradle installed locally.
-2. Let Gradle sync — it needs network access the first time to pull dependencies (AndroidX, Compose, Room, Hilt, Coil, Kotlin serialization).
-3. Run on a device or emulator running **Android 8.0 (API 26) or newer**.
+This project is proprietary and is provided for viewing purposes only.
 
-No API keys, no backend setup, no accounts — it should run the first time you build it.
+**Copyright © 2026 Lochan Palani All Rights Reserved.**
 
-## About this build — please read
-
-I wrote every file in this project by hand in a sandboxed environment with **no Android SDK and no internet access**, so I was not able to actually compile, run, or instrument-test this project before handing it to you. I went through the entire codebase afterward checking for the mistakes that setup makes likely — missing imports, mismatched types, unbalanced braces, wrong package references — and fixed everything I found. I'm confident in the architecture and the logic, but I can't promise it's 100% free of a build error the way I could if I'd been able to run `./gradlew assembleDebug` myself.
-
-If Android Studio flags anything on first sync, it's almost certainly a small, mechanical fix (an import, a version mismatch) rather than a structural problem — happy to fix anything you run into.
+No permission is granted to copy, modify, distribute, or use this software without prior written permission from the copyright owner.
