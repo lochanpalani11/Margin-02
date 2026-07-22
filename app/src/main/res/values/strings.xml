@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Margin</string>
+    <string name="widget_description">Quick-add items or open the bid calculator right from your home screen.</string>
+    <string name="widget_quick_add">Quick Add</string>
+    <string name="widget_quick_sell">Quick Sell</string>
+    <string name="widget_bid_calc">Bid Calc</string>
+    <string name="bid_calc_widget_description">Open the MacBid calculator right from your home screen.</string>
+    <string name="quick_actions_widget_description">Quickly sell or add items right from your home screen.</string>
+</resources>

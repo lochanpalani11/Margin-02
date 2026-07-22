@@ -1,0 +1,69 @@
+<!-- Home screen widget: Quick Sell & Quick Add -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="12dp"
+    android:clipToPadding="false"
+    android:background="@drawable/widget_background">
+
+    <LinearLayout
+        android:id="@+id/widget_btn_quick_sell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:id="@+id/widget_icon_sell"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_widget_sell"
+            android:contentDescription="@string/widget_quick_sell" />
+
+        <TextView
+            android:id="@+id/widget_label_sell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/widget_quick_sell"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/widget_btn_quick_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_marginStart="16dp">
+
+        <ImageView
+            android:id="@+id/widget_icon_add"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_widget_add"
+            android:contentDescription="@string/widget_quick_add" />
+
+        <TextView
+            android:id="@+id/widget_label_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/widget_quick_add"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+</LinearLayout>

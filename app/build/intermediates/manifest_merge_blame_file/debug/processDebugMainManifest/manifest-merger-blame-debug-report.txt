@@ -1,0 +1,235 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.margin.app"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <permission
+11-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:22:5-24:47
+12        android:name="com.margin.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+12-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:23:9-81
+13        android:protectionLevel="signature" />
+13-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:24:9-44
+14
+15    <uses-permission android:name="com.margin.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+15-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:26:22-94
+16
+17    <application
+17-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:4:5-72:19
+18        android:name="com.margin.app.MarginApplication"
+18-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:5:9-42
+19        android:allowBackup="true"
+19-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:6:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.15.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\4995bec11ed1e0a78201fc572187b6da\transformed\core-1.15.0\AndroidManifest.xml:28:18-86
+21        android:dataExtractionRules="@xml/data_extraction_rules"
+21-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:7:9-65
+22        android:debuggable="true"
+23        android:extractNativeLibs="false"
+24        android:fullBackupContent="@xml/backup_rules"
+24-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:8:9-54
+25        android:icon="@mipmap/ic_launcher"
+25-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:9:9-43
+26        android:label="@string/app_name"
+26-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:11:9-41
+27        android:roundIcon="@mipmap/ic_launcher_round"
+27-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:10:9-54
+28        android:supportsRtl="true"
+28-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:13:9-35
+29        android:testOnly="true"
+30        android:theme="@style/Theme.Margin" >
+30-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:12:9-44
+31        <activity
+31-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:15:9-24:20
+32            android:name="com.margin.app.MainActivity"
+32-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:16:13-41
+33            android:exported="true"
+33-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:17:13-36
+34            android:theme="@style/Theme.Margin"
+34-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:18:13-48
+35            android:windowSoftInputMode="adjustResize" >
+35-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:19:13-55
+36            <intent-filter>
+36-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:20:13-23:29
+37                <action android:name="android.intent.action.MAIN" />
+37-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:21:17-69
+37-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:21:25-66
+38
+39                <category android:name="android.intent.category.LAUNCHER" />
+39-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:22:17-77
+39-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:22:27-74
+40            </intent-filter>
+41        </activity>
+42
+43        <provider
+44            android:name="androidx.core.content.FileProvider"
+44-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:27:13-62
+45            android:authorities="com.margin.app.fileprovider"
+45-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:28:13-64
+46            android:exported="false"
+46-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:29:13-37
+47            android:grantUriPermissions="true" >
+47-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:30:13-47
+48            <meta-data
+48-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:31:13-33:54
+49                android:name="android.support.FILE_PROVIDER_PATHS"
+49-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:32:17-67
+50                android:resource="@xml/file_paths" />
+50-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:33:17-51
+51        </provider>
+52
+53        <!-- Home screen widget: combined Quick Add & Bid Calculator shortcuts -->
+54        <receiver
+54-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:37:9-46:20
+55            android:name="com.margin.app.widget.MarginWidgetProvider"
+55-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:38:13-56
+56            android:exported="true" >
+56-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:39:13-36
+57            <intent-filter>
+57-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:40:13-42:29
+58                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+58-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:17-84
+58-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:25-81
+59            </intent-filter>
+60
+61            <meta-data
+61-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:43:13-45:62
+62                android:name="android.appwidget.provider"
+62-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:44:17-58
+63                android:resource="@xml/margin_widget_info" />
+63-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:45:17-59
+64        </receiver>
+65
+66        <!-- Home screen widget: Bid Calculator only -->
+67        <receiver
+67-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:49:9-58:20
+68            android:name="com.margin.app.widget.BidCalcWidgetProvider"
+68-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:50:13-57
+69            android:exported="true" >
+69-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:51:13-36
+70            <intent-filter>
+70-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:40:13-42:29
+71                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+71-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:17-84
+71-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:25-81
+72            </intent-filter>
+73
+74            <meta-data
+74-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:43:13-45:62
+75                android:name="android.appwidget.provider"
+75-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:44:17-58
+76                android:resource="@xml/bid_calc_widget_info" />
+76-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:45:17-59
+77        </receiver>
+78
+79        <!-- Home screen widget: Quick Sell & Quick Add -->
+80        <receiver
+80-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:61:9-70:20
+81            android:name="com.margin.app.widget.QuickActionsWidgetProvider"
+81-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:62:13-62
+82            android:exported="true" >
+82-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:63:13-36
+83            <intent-filter>
+83-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:40:13-42:29
+84                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+84-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:17-84
+84-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:41:25-81
+85            </intent-filter>
+86
+87            <meta-data
+87-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:43:13-45:62
+88                android:name="android.appwidget.provider"
+88-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:44:17-58
+89                android:resource="@xml/quick_actions_widget_info" />
+89-->C:\Freebuff\Margin\Margin\app\src\main\AndroidManifest.xml:45:17-59
+90        </receiver>
+91
+92        <provider
+92-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+93            android:name="androidx.startup.InitializationProvider"
+93-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+94            android:authorities="com.margin.app.androidx-startup"
+94-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+95            android:exported="false" >
+95-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+96            <meta-data
+96-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+97                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+97-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+98                android:value="androidx.startup" />
+98-->[androidx.emoji2:emoji2:1.3.0] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\5ad6586a50dff99ba2bde8e2c0e4b282\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+99            <meta-data
+99-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\6fc4e461e4a63551470a8b8db48efc71\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:29:13-31:52
+100                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+100-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\6fc4e461e4a63551470a8b8db48efc71\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:30:17-78
+101                android:value="androidx.startup" />
+101-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\6fc4e461e4a63551470a8b8db48efc71\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:31:17-49
+102            <meta-data
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+103                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+104                android:value="androidx.startup" />
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+105        </provider>
+106
+107        <activity
+107-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\c9e2cc0a16556c18020b68df0c000e4c\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+108            android:name="androidx.compose.ui.tooling.PreviewActivity"
+108-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\c9e2cc0a16556c18020b68df0c000e4c\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+109            android:exported="true" />
+109-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\c9e2cc0a16556c18020b68df0c000e4c\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+110
+111        <service
+111-->[androidx.room:room-runtime:2.6.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\555be585cabf8511c4c34dd201e4946f\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+112            android:name="androidx.room.MultiInstanceInvalidationService"
+112-->[androidx.room:room-runtime:2.6.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\555be585cabf8511c4c34dd201e4946f\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+113            android:directBootAware="true"
+113-->[androidx.room:room-runtime:2.6.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\555be585cabf8511c4c34dd201e4946f\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+114            android:exported="false" />
+114-->[androidx.room:room-runtime:2.6.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\555be585cabf8511c4c34dd201e4946f\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+115
+116        <receiver
+116-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+117            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+118            android:directBootAware="false"
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+119            android:enabled="true"
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+120            android:exported="true"
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+121            android:permission="android.permission.DUMP" >
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+122            <intent-filter>
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+123                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+124            </intent-filter>
+125            <intent-filter>
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+126                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+127            </intent-filter>
+128            <intent-filter>
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+129                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+130            </intent-filter>
+131            <intent-filter>
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+132                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\kpazh\.gradle\caches\9.4.1\transforms\d925e2828a89bb978092157908108590\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+133            </intent-filter>
+134        </receiver>
+135    </application>
+136
+137</manifest>

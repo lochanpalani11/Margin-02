@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.margin.app-mergeDebugResources-2:/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "C:\\Freebuff\\Margin\\Margin\\app\\src\\main\\res\\values-night\\widget_colors.xml",
+                    "from": {
+                        "startLines": "6,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "270,99,153,214",
+                        "endColumns": "49,53,60,55",
+                        "endOffsets": "315,148,209,265"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,105,159,220",
+                        "endColumns": "49,53,60,55",
+                        "endOffsets": "100,154,215,271"
+                    }
+                }
+            ]
+        }
+    ]
+}

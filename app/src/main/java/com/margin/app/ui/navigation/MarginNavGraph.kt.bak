@@ -1,0 +1,495 @@
+package com.margin.app.ui.navigation
+
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Inventory2
+import androidx.compose.material.icons.filled.LocalShipping
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.margin.app.ui.screens.additem.AddEditItemScreen
+import com.margin.app.ui.screens.analytics.AnalyticsScreen
+import com.margin.app.ui.screens.bidcalculator.BidCalculatorScreen
+import com.margin.app.ui.screens.dashboard.DashboardScreen
+import com.margin.app.ui.screens.dashboard.DashboardViewModel
+import com.margin.app.ui.screens.hauls.AddHaulScreen
+import com.margin.app.ui.screens.hauls.HaulsScreen
+import com.margin.app.ui.screens.inventory.InventoryScreen
+import com.margin.app.ui.screens.itemdetail.ItemDetailScreen
+import com.margin.app.ui.screens.kpidetail.KpiDetailScreen
+import com.margin.app.ui.screens.more.MoreScreen
+import com.margin.app.ui.screens.more.MoreViewModel
+import com.margin.app.ui.screens.sellitem.SellItemScreen
+import com.margin.app.ui.screens.settings.SettingsScreen
+import com.margin.app.ui.theme.SurfaceElevated1
+import com.margin.app.ui.theme.SurfaceElevated2
+import com.margin.app.ui.theme.TextSecondary
+
+/** Extra bottom padding for screens that scroll behind the transparent bottom nav bar. */
+val BottomNavPadding = 120.dp
+
+/** Bottom nav padding plus the system navigation bar insets. */
+@Composable
+fun bottomNavPaddingWithInsets(): androidx.compose.ui.unit.Dp {
+    val insets = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    return BottomNavPadding + insets
+}
+
+private fun BottomIcon.toImageVector(): ImageVector = when (this) {
+    BottomIcon.DASHBOARD -> Icons.Filled.Home
+    BottomIcon.INVENTORY -> Icons.Filled.Inventory2
+    BottomIcon.HAULS -> Icons.Filled.LocalShipping
+    BottomIcon.BID_CALCULATOR -> Icons.Filled.Calculate
+    BottomIcon.MORE -> Icons.Filled.MoreHoriz
+}
+
+@Composable
+fun MarginNavGraph(
+    navController: NavHostController = rememberNavController(),
+    pendingWidgetRoute: String? = null,
+    onWidgetRouteConsumed: () -> Unit = {}
+) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+    val showBottomBar = bottomNavItems.any { it.route == currentRoute }
+    var showAddDropup by remember { mutableStateOf(false) }
+    var addButtonPressed by remember { mutableStateOf(false) }
+
+    // Observe in-stock count for nav badge
+    val dashboardVM: DashboardViewModel = hiltViewModel()
+    val dashboardState by dashboardVM.uiState.collectAsState()
+    val inStockCount = dashboardState.stats.inStockCount
+    val addButtonScale by animateFloatAsState(
+        targetValue = if (addButtonPressed) 0.85f else 1f,
+        animationSpec = spring(dampingRatio = 0.5f, stiffness = 400f),
+        label = "addButtonScale"
+    )
+
+    LaunchedEffect(addButtonPressed) {
+        if (addButtonPressed) {
+            addButtonPressed = false
+            showAddDropup = !showAddDropup
+        }
+    }
+
+    // Navigate to the target screen when launched from a widget.
+    // Observing the state here lets onNewIntent updates re-trigger navigation
+    // when the activity is already alive.
+    LaunchedEffect(pendingWidgetRoute) {
+        if (pendingWidgetRoute != null) {
+            navController.navigate(pendingWidgetRoute) {
+                popUpTo(Destinations.DASHBOARD) { inclusive = false }
+            }
+            onWidgetRouteConsumed()
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            containerColor = androidx.compose.ui.graphics.Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            bottomBar = {
+                if (showBottomBar) {
+                    Column {
+                        // Floating Add button area above the nav bar
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(androidx.compose.ui.graphics.Color.Transparent),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            // Dropup menu — appears when Add button is tapped
+                            androidx.compose.animation.AnimatedVisibility(
+                                visible = showAddDropup,
+                                enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
+                                exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 })
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .background(
+                                            SurfaceElevated2,
+                                            RoundedCornerShape(20.dp)
+                                        )
+                                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    // Haul add
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(16.dp))
+                                            .clickable(
+                                                indication = null,
+                                                interactionSource = remember { MutableInteractionSource() }
+                                            ) {
+                                                showAddDropup = false
+                                                navController.navigate(Destinations.ADD_HAUL)
+                                            }
+                                            .padding(8.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.LocalShipping,
+                                            contentDescription = "Add Haul",
+                                            tint = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.size(28.dp)
+                                        )
+                                        Text(
+                                            text = "Haul",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
+                                    // Inventory add
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(16.dp))
+                                            .clickable(
+                                                indication = null,
+                                                interactionSource = remember { MutableInteractionSource() }
+                                            ) {
+                                                showAddDropup = false
+                                                navController.navigate(Destinations.NEW_ITEM)
+                                            }
+                                            .padding(8.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Inventory2,
+                                            contentDescription = "Add Item",
+                                            tint = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.size(28.dp)
+                                        )
+                                        Text(
+                                            text = "Item",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
+                                }
+                            }
+
+                            // The circular Add button — appears when dropup is closed
+                            androidx.compose.animation.AnimatedVisibility(
+                                visible = !showAddDropup,
+                                enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
+                                exit = fadeOut() + slideOutVertically(targetOffsetY = { it })
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .scale(addButtonScale)
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f))
+                                        .border(
+                                            1.dp,
+                                            MaterialTheme.colorScheme.outline.copy(alpha = 0.15f),
+                                            CircleShape
+                                        )
+                                        .clickable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() }
+                                        ) { addButtonPressed = true },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Add,
+                                        contentDescription = "Add",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(28.dp)
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            NavigationBar(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                tonalElevation = 0.dp
+                            ) {
+                                bottomNavItems.forEach { item ->
+                                val isInventory = item.iconSelector == BottomIcon.INVENTORY
+                                NavigationBarItem(
+                                    selected = currentRoute == item.route,
+                                    onClick = {
+                                        showAddDropup = false
+                                        navController.navigate(item.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    },
+                                    icon = {
+                                        if (isInventory && inStockCount > 0) {
+                                            BadgedBox(badge = { Badge { Text("$inStockCount") } }) {
+                                                Icon(
+                                                    imageVector = item.iconSelector.toImageVector(),
+                                                    contentDescription = item.label
+                                                )
+                                            }
+                                        } else {
+                                            Icon(
+                                                imageVector = item.iconSelector.toImageVector(),
+                                                contentDescription = item.label
+                                            )
+                                        }
+                                    },
+                                    label = { Text(item.label) },
+                                    colors = NavigationBarItemDefaults.colors(
+                                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                                        unselectedIconColor = TextSecondary,
+                                        unselectedTextColor = TextSecondary,
+                                        indicatorColor = SurfaceElevated1
+                                    )
+                                )
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+        ) { padding ->
+            // Click-outside dismissal — tapping the content area closes the dropup
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .then(
+                        if (showAddDropup) Modifier.clickable(
+                            indication = null,
+                            interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                        ) { showAddDropup = false }
+                        else Modifier
+                    )
+            ) {
+                NavHost(
+                    navController = navController,
+                    startDestination = Destinations.DASHBOARD,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    composable(Destinations.DASHBOARD) {
+                        val dashboardVM: DashboardViewModel = hiltViewModel()
+                        val dashboardState by dashboardVM.uiState.collectAsState()
+                        DashboardScreen(
+                            onNavigateToInventory = {
+                                navController.navigate(Destinations.INVENTORY) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            onKpiDetail = { kpiType ->
+                                navController.navigate(Destinations.kpiDetail(kpiType))
+                            },
+                            onNavigateToBidCalculator = {
+                                navController.navigate(Destinations.BID_CALCULATOR)
+                            },
+                            onNavigateToAddItem = {
+                                navController.navigate(Destinations.NEW_ITEM)
+                            }
+                        )
+                    }
+                    composable(Destinations.INVENTORY) {
+                        InventoryScreen(
+                            onItemClick = { id -> navController.navigate(Destinations.itemDetail(id)) },
+                            onAddItemClick = { navController.navigate(Destinations.NEW_ITEM) },
+                            onEditItem = { id -> navController.navigate(Destinations.editItem(id)) },
+                            onSellItem = { id -> navController.navigate(Destinations.sellItem(id)) },
+                            onDeleteItem = { id -> navController.navigate(Destinations.itemDetail(id)) }
+                        )
+                    }
+                    composable(Destinations.ANALYTICS) {
+                        AnalyticsScreen(
+                            onKpiDetail = { kpiType ->
+                                navController.navigate(Destinations.kpiDetail(kpiType))
+                            }
+                        )
+                    }
+                    composable(Destinations.SETTINGS) {
+                        SettingsScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable(Destinations.MORE) {
+                        val moreVM: MoreViewModel = hiltViewModel()
+                        MoreScreen(
+                            onNavigateToAnalytics = {
+                                navController.navigate(Destinations.ANALYTICS)
+                            },
+                            onNavigateToSettings = {
+                                navController.navigate(Destinations.SETTINGS)
+                            },
+                            onNavigateToKpiDetail = { kpiType ->
+                                navController.navigate(Destinations.kpiDetail(kpiType))
+                            },
+                            onExportCsv = { moreVM.exportCsv() }
+                        )
+                    }
+
+                    // Hauls
+                    composable(Destinations.HAULS) {
+                        HaulsScreen(
+                            onHaulClick = { id -> navController.navigate(Destinations.haulDetail(id)) },
+                            onAddHaulClick = { navController.navigate(Destinations.ADD_HAUL) },
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable(Destinations.ADD_HAUL) {
+                        AddHaulScreen(
+                            onSaved = { navController.popBackStack() },
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable(
+                        route = Destinations.HAUL_DETAIL,
+                        arguments = listOf(navArgument("haulId") { type = NavType.LongType })
+                    ) { backStackEntry ->
+                        val haulId = backStackEntry.arguments?.getLong("haulId")
+                        InventoryScreen(
+                            haulId = haulId,
+                            onBack = { navController.popBackStack() },
+                            onItemClick = { id -> navController.navigate(Destinations.itemDetail(id)) },
+                            onAddItemClick = {
+                                navController.navigate("add_edit_item?itemId=-1&haulId=$haulId")
+                            },
+                            onEditItem = { id -> navController.navigate(Destinations.editItem(id)) },
+                            onSellItem = { id -> navController.navigate(Destinations.sellItem(id)) },
+                            onDeleteItem = { id -> navController.navigate(Destinations.itemDetail(id)) }
+                        )
+                    }
+
+                    // Bid Calculator
+                    composable(Destinations.BID_CALCULATOR) {
+                        BidCalculatorScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    // KPI Detail
+                    composable(
+                        route = Destinations.KPI_DETAIL,
+                        arguments = listOf(navArgument("kpiType") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val kpiType = backStackEntry.arguments?.getString("kpiType") ?: "profit"
+                        KpiDetailScreen(
+                            kpiType = kpiType,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    // Existing routes
+                    composable(
+                        route = Destinations.ITEM_DETAIL,
+                        arguments = listOf(navArgument("itemId") { type = NavType.LongType })
+                    ) {
+                        ItemDetailScreen(
+                            onBack = { navController.popBackStack() },
+                            onEdit = { id -> navController.navigate(Destinations.editItem(id)) },
+                            onSell = { id -> navController.navigate(Destinations.sellItem(id)) }
+                        )
+                    }
+                    composable(
+                        route = Destinations.ADD_EDIT_ITEM,
+                        arguments = listOf(
+                            navArgument("itemId") {
+                                type = NavType.LongType
+                                defaultValue = Destinations.NO_ITEM_ID
+                            },
+                            navArgument("haulId") {
+                                type = NavType.LongType
+                                defaultValue = Destinations.NO_ITEM_ID
+                            }
+                        )
+                    ) {
+                        AddEditItemScreen(
+                            onSaved = {
+                                navController.previousBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("itemSaved", true)
+                                navController.popBackStack()
+                            },
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable(
+                        route = Destinations.SELL_ITEM,
+                        arguments = listOf(navArgument("itemId") { type = NavType.LongType })
+                    ) {
+                        SellItemScreen(
+                            onSaved = { navController.popBackStack() },
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}

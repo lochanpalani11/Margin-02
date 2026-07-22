@@ -1,0 +1,38 @@
+<!-- Home screen widget: Bid Calculator only -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="12dp"
+    android:clipToPadding="false"
+    android:background="@drawable/widget_background">
+
+    <LinearLayout
+        android:id="@+id/widget_btn_bid_calc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/widget_icon_calc"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_widget_calc"
+            android:contentDescription="@string/widget_bid_calc" />
+
+        <TextView
+            android:id="@+id/widget_label_calc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/widget_bid_calc"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+</LinearLayout>
